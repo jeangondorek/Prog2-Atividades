@@ -34,12 +34,12 @@ public class CamisetaDAO implements Serializable{
     	ResultSet rs = null;//Resposta do SGBD
     	try {
 			con = this.ds.getConnection();//Pegar um conexão
-			ps = con.prepareStatement("SELECT idcamiseta, tamanho, descricao FROM camiseta");
+			ps = con.prepareStatement("SELECT id_camiseta, tamanho, descricao FROM camiseta");
 			rs = ps.executeQuery();
 			while (rs.next()) {//Pega próxima linha do retorno
 				Camiseta c = new Camiseta();
 				c.setDescricao(rs.getString("descricao"));
-				c.setIdCamiseta(rs.getLong("idcamiseta"));
+				c.setIdCamiseta(rs.getLong("id_camiseta"));
 				c.setTamanho(rs.getString("tamanho"));
 				camisetas.add(c);
 			}
@@ -59,13 +59,13 @@ public class CamisetaDAO implements Serializable{
     	ResultSet rs = null;//Resposta do SGBD
     	try {
 			con = this.ds.getConnection();//Pegar um conexão
-			ps = con.prepareStatement("SELECT idcamiseta, tamanho, descricao FROM camiseta WHERE tamanho = ?");
+			ps = con.prepareStatement("SELECT id_camiseta, tamanho, descricao FROM camiseta WHERE tamanho = ?");
 			ps.setString(1, tamanho);
 			rs = ps.executeQuery();
 			while (rs.next()) {//Pega próxima linha do retorno
 				Camiseta c = new Camiseta();
 				c.setDescricao(rs.getString("descricao"));
-				c.setIdCamiseta(rs.getLong("idcamiseta"));
+				c.setIdCamiseta(rs.getLong("id_camiseta"));
 				c.setTamanho(rs.getString("tamanho"));
 				camisetas.add(c);
 			}
@@ -85,7 +85,7 @@ public class CamisetaDAO implements Serializable{
     	try {
 	    	con = this.ds.getConnection();
 	    	try {				
-				ps = con.prepareStatement("INSERT INTO camiseta (idcamiseta, tamanho, descricao) VALUES (?, ?, ?)");
+				ps = con.prepareStatement("INSERT INTO camiseta (id_camiseta, tamanho, descricao) VALUES (?, ?, ?)");
 				ps.setLong(1, c.getIdCamiseta());
 				ps.setString(2, c.getTamanho());
 				ps.setString(3, c.getDescricao());	
@@ -107,7 +107,7 @@ public class CamisetaDAO implements Serializable{
     	try {
 	    	con = this.ds.getConnection();
 	    	try {				
-				ps = con.prepareStatement("UPDATE camiseta SET tamanho = ?, descricao = ? WHERE idcamiseta = ?");
+				ps = con.prepareStatement("UPDATE camiseta SET tamanho = ?, descricao = ? WHERE id_camiseta = ?");
 				ps.setString(1, c.getTamanho());
 				ps.setString(2, c.getDescricao());
 				ps.setLong(3, c.getIdCamiseta());
@@ -129,7 +129,7 @@ public class CamisetaDAO implements Serializable{
     	try {
 	    	con = this.ds.getConnection();
 	    	try {				
-				ps = con.prepareStatement("DELETE FROM camiseta WHERE idcamiseta = ?");
+				ps = con.prepareStatement("DELETE FROM camiseta WHERE id_camiseta = ?");
 				ps.setLong(1, c.getIdCamiseta());
 				ps.execute();
 				resultado = true;
