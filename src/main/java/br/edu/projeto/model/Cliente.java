@@ -1,17 +1,31 @@
 package br.edu.projeto.model;
+import javax.validation.constraints.*;
+
 
 public class Cliente {
 
 	private Integer id_clientes;
-
+	
+	@NotNull
+    @Pattern(regexp = "[A-Za-z ]*")
     private String nome;
     private String nome_social;
-
+    @NotNull
+    @Pattern(regexp = "[0-9]{3}[.][0-9]{3}[.][0-9]{3}-[0-9]{2}")
     private Integer cpf;
+    @NotNull
+    @DecimalMin(value = "0.01")
+    @DecimalMax(value = "9999.99")
     private Float altura;
+    @NotNull
+    @Min(value = 1)
     private Integer massa;
     private String genero;
+    @NotNull
+    @Min(value = 1)
     private Integer idade;
+    @NotNull
+    @Pattern(regexp = "\\([0-9]{2}\\)[0-9]{5}-[0-9]{4}")
     private Integer celular;
     private Integer telefone;
     private String endereco;

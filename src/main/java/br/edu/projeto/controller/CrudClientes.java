@@ -68,12 +68,17 @@ public class CrudClientes implements Serializable {
 	}
 	
 	public void salvarAlteracao() {
-		if (this.clienteDAO.update(this.cliente)) {
-			PrimeFaces.current().executeScript("PF('clienteDialog').hide()");
-			PrimeFaces.current().ajax().update("form:dt-cliente");
-			this.facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "cliente Atualizada", null));
-		} else
-    		this.facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Falha ao Atualizar cliente", null));
+		if (this.cliente.getId_clientes() != null && this.cliente.getId_clientes() > 0)
+		{
+			if (this.clienteDAO.update(this.cliente)) {
+				PrimeFaces.current().executeScript("PF('clienteDialog').hide()");
+				PrimeFaces.current().ajax().update("form:dt-cliente");
+				this.facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente Atualizada", null));
+			} else
+        		this.facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Falha ao Atualizar Cliente", null));
+		} else {
+			this.facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "ID da Cliente inválido!", null));
+    	}
 		this.setListaCliente(clienteDAO.listAll());
 		PrimeFaces.current().ajax().update("form:messages");
 	}

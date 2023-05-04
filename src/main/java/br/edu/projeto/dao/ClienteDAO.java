@@ -177,55 +177,38 @@ public class ClienteDAO implements Serializable{
    	return resultado;
    }
    
-   public Boolean update(Cliente u) {
+  public Boolean update(Cliente c) {
    	Boolean resultado = false;
    	Connection con = null;
    	PreparedStatement ps = null;
-   	PreparedStatement ps2 = null;
-   	PreparedStatement ps3 = null;
-   	ResultSet rs = null;
    	try {
 	    	con = this.ds.getConnection();
-	    	con.setAutoCommit(false);
 	    	try {				
-				ps = con.prepareStatement("UPDATE clientes SET nome = ? ,id_clientes = ?,"
-						+ "email = ? ,cpf = ? ,"
-						+ "nome_social = ? ,idade= ? ,altura = ?,"
-						+ "  massa = ?,  genero = ?, telefone = ?,"
-						+ "celular = ? , endereco = ?  WHERE id_clientes = ?");
-				ps.setInt(1, u.getId_clientes());
-				ps.setString(2, u.getNome());
-				ps.setString(3, u.getEmail());
-				ps.setInt(4, u.getCpf());
-				ps.setString(5, u.getNome_social());
-				
-				ps.setInt(6, u.getIdade());
-				ps.setFloat(7, u.getAltura());
-				ps.setInt(8, u.getMassa());
-				
-				
-				
-				ps.setString(9, u.getGenero());
-				ps.setInt(10, u.getTelefone());
-				ps.setInt(11, u.getCelular());
-				
-				ps.setString(12, u.getEndereco());				
-				ps.execute();	
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-				con.rollback();
-			}
+	    		ps = con.prepareStatement("UPDATE clientes SET nome = ?, email = ?, cpf = ?, nome_social = ?, idade = ?, altura = ?, massa = ?, genero = ?, telefone = ?, celular = ?, endereco = ? WHERE id_clientes = ?");
+    		    ps.setString(1, c.getNome());
+    		    ps.setString(2, c.getEmail());
+    		    ps.setInt(3, c.getCpf());
+    		    ps.setString(4, c.getNome_social());
+    		    ps.setInt(5, c.getIdade());
+    		    ps.setFloat(6, c.getAltura());
+    		    ps.setInt(7, c.getMassa());
+    		    ps.setString(8, c.getGenero());
+    		    ps.setInt(9, c.getTelefone());
+    		    ps.setInt(10, c.getCelular());
+    		    ps.setString(11, c.getEndereco());
+    		    ps.setInt(12, c.getId_clientes());
+    		    ps.execute();
+    		    con.commit();
+				resultado = true;
+			} catch (SQLException e) {e.printStackTrace();}
    	} catch (SQLException e) {e.printStackTrace();
    	} finally {
-			DbUtil.closeResultSet(rs);
 			DbUtil.closePreparedStatement(ps);
-			DbUtil.closePreparedStatement(ps2);
-			DbUtil.closePreparedStatement(ps3);
 			DbUtil.closeConnection(con);
 		}
    	return resultado;
    }
+
     
     public Boolean delete(Cliente u) {
     	Boolean resultado = false;
