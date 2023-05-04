@@ -7,16 +7,14 @@ public class Cliente {
     private String nome;
     private String nome_social;
 
-    private String cpf;
+    private Integer cpf;
     private Float altura;
-    private Float massa;
+    private Integer massa;
     private String genero;
     private Integer idade;
-    private String celular;
-    private String telefone;
+    private Integer celular;
+    private Integer telefone;
     private String endereco;
-
-    private String senha;
     
     private String email;
 
@@ -44,11 +42,11 @@ public class Cliente {
 		this.nome_social = nome_social;
 	}
 
-	public String getCpf() {
+	public Integer getCpf() {
 		return cpf;
 	}
 
-	public void setCpf(String cpf) {
+	public void setCpf(Integer cpf) {
 		this.cpf = cpf;
 	}
 
@@ -60,11 +58,11 @@ public class Cliente {
 		this.altura = altura;
 	}
 
-	public Float getMassa() {
+	public Integer getMassa() {
 		return massa;
 	}
 
-	public void setMassa(Float massa) {
+	public void setMassa(Integer massa) {
 		this.massa = massa;
 	}
 
@@ -84,19 +82,19 @@ public class Cliente {
 		this.idade = idade;
 	}
 
-	public String getCelular() {
+	public Integer getCelular() {
 		return celular;
 	}
 
-	public void setCelular(String celular) {
+	public void setCelular(Integer celular) {
 		this.celular = celular;
 	}
 
-	public String getTelefone() {
+	public Integer getTelefone() {
 		return telefone;
 	}
 
-	public void setTelefone(String telefone) {
+	public void setTelefone(Integer telefone) {
 		this.telefone = telefone;
 	}
 
@@ -106,14 +104,6 @@ public class Cliente {
 
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
 	}
 
 	public String getEmail() {

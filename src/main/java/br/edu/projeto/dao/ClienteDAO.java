@@ -35,16 +35,17 @@ public class ClienteDAO implements Serializable{
 			rs = ps.executeQuery();
 			if (rs.next()) {
 				u.setId_clientes(rs.getInt("id_clientes"));
-				u.setEmail(rs.getString("email"));
 				u.setNome(rs.getString("nome"));
+				u.setEmail(rs.getString("email"));
+				u.setCpf(rs.getInt("cpf"));
 				u.setNome_social(rs.getString("nome_social"));
-				u.setCpf(rs.getString("cpf"));
-				u.setAltura(rs.getFloat("altura"));
-				u.setMassa(rs.getFloat("massa"));
-				u.setGenero(rs.getString("genero"));
 				u.setIdade(rs.getInt("idade"));
-				u.setTelefone(rs.getString("telefone"));
-				u.setCelular(rs.getString("celular"));
+				u.setAltura(rs.getFloat("altura"));
+				u.setMassa(rs.getInt("massa"));
+				u.setGenero(rs.getString("genero"));
+				
+				u.setTelefone(rs.getInt("telefone"));
+				u.setCelular(rs.getInt("celular"));
 				u.setEndereco(rs.getString("endereco"));
 			}
 		} catch (SQLException e) {e.printStackTrace();
@@ -58,27 +59,29 @@ public class ClienteDAO implements Serializable{
     
     public List<Cliente> listByNome(String nome) {
     	List<Cliente> cliente = new ArrayList<Cliente>();
-    	Connection con = null;//Conexão com a base
-    	PreparedStatement ps = null;//Instrução SQL
-    	ResultSet rs = null;//Resposta do SGBD
+    	Connection con = null;
+    	PreparedStatement ps = null;
+    	ResultSet rs = null;
     	try {
-			con = this.ds.getConnection();//Pegar um conexão
+			con = this.ds.getConnection();
 			ps = con.prepareStatement("SELECT * FROM clientes WHERE nome = ?");
 			ps.setString(1, nome);
 			rs = ps.executeQuery();
-			while (rs.next()) {//Pega próxima linha do retorno
+			while (rs.next()) {
 				Cliente c = new Cliente();
 				c.setId_clientes(rs.getInt("id_clientes"));
-				c.setEmail(rs.getString("email"));
+				
 				c.setNome(rs.getString("nome"));
+				c.setEmail(rs.getString("email"));
+				c.setCpf(rs.getInt("cpf"));
 				c.setNome_social(rs.getString("nome_social"));
-				c.setCpf(rs.getString("cpf"));
-				c.setAltura(rs.getFloat("altura"));
-				c.setMassa(rs.getFloat("massa"));
-				c.setGenero(rs.getString("genero"));
 				c.setIdade(rs.getInt("idade"));
-				c.setTelefone(rs.getString("telefone"));
-				c.setCelular(rs.getString("celular"));
+				c.setAltura(rs.getFloat("altura"));
+				c.setMassa(rs.getInt("massa"));
+				c.setGenero(rs.getString("genero"));
+				
+				c.setTelefone(rs.getInt("telefone"));
+				c.setCelular(rs.getInt("celular"));
 				c.setEndereco(rs.getString("endereco"));
 				cliente.add(c);
 			}
@@ -98,21 +101,22 @@ public class ClienteDAO implements Serializable{
     	ResultSet rs = null;
     	try {
 			con = this.ds.getConnection();
-			ps = con.prepareStatement("SELECT id_clientes, nome, email FROM clientes");
+			ps = con.prepareStatement("SELECT * FROM clientes");
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				Cliente u = new Cliente();
 				u.setId_clientes(rs.getInt("id_clientes"));
-				u.setEmail(rs.getString("email"));
 				u.setNome(rs.getString("nome"));
+				u.setEmail(rs.getString("email"));
+				u.setCpf(rs.getInt("cpf"));
 				u.setNome_social(rs.getString("nome_social"));
-				u.setCpf(rs.getString("cpf"));
-				u.setAltura(rs.getFloat("altura"));
-				u.setMassa(rs.getFloat("massa"));
-				u.setGenero(rs.getString("genero"));
 				u.setIdade(rs.getInt("idade"));
-				u.setTelefone(rs.getString("telefone"));
-				u.setCelular(rs.getString("celular"));
+				u.setAltura(rs.getFloat("altura"));
+				u.setMassa(rs.getInt("massa"));
+				u.setGenero(rs.getString("genero"));
+				
+				u.setTelefone(rs.getInt("telefone"));
+				u.setCelular(rs.getInt("celular"));
 				u.setEndereco(rs.getString("endereco"));
 				clientes.add(u);
 			}
@@ -137,26 +141,27 @@ public class ClienteDAO implements Serializable{
 	    	con = this.ds.getConnection();
 	    	con.setAutoCommit(false);
 	    	try {				
-				ps = con.prepareStatement("INSERT INTO clientes (nome,nome_social,idade,massa,altura,genero"
-						+ ", email, senha, cpf, celular, telefone, endereco)"
-						+ " VALUES (?, ?, ?) RETURNING id_clientes");
-				ps.setString(1, u.getNome());
-				ps.setString(2, u.getEmail());
-				ps.setString(3, u.getNome_social());
-				ps.setInt(4, u.getId_clientes());
-				ps.setInt(5, u.getIdade());
-				ps.setFloat(6, u.getMassa());
-				ps.setFloat(7, u.getAltura());
-				ps.setString(8, u.getEndereco());
-				ps.setString(9, u.getCpf());
-				ps.setString(10, u.getSenha());
-				ps.setString(11, u.getTelefone());
-				ps.setString(12, u.getCelular());
-				ps.setString(13, u.getGenero());	
+				ps = con.prepareStatement("INSERT INTO clientes (id_clientes,nome,email,cpf,nome_social,idade,altura,massa,genero, telefone,celular, endereco) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+				ps.setInt(1, u.getId_clientes());
+				ps.setString(2, u.getNome());
+				ps.setString(3, u.getEmail());
+				ps.setInt(4, u.getCpf());
+				ps.setString(5, u.getNome_social());
 				
-				rs = ps.executeQuery();
-				rs.next();
-				u.setId_clientes(rs.getInt("id_clientes"));
+				ps.setInt(6, u.getIdade());
+				ps.setFloat(7, u.getAltura());
+				ps.setInt(8, u.getMassa());
+				
+				
+				
+				ps.setString(9, u.getGenero());
+				ps.setInt(10, u.getTelefone());
+				ps.setInt(11, u.getCelular());
+				
+				ps.setString(12, u.getEndereco());
+				
+				ps.execute();
+				resultado = true;
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -183,24 +188,28 @@ public class ClienteDAO implements Serializable{
 	    	con = this.ds.getConnection();
 	    	con.setAutoCommit(false);
 	    	try {				
-				ps = con.prepareStatement("UPDATE clientes SET celular = ? ,"
-						+ "telefone = ? ,cpf = ? ,"
-						+ "endereco = ? ,genero= ? ,nome = ?,"
-						+ "  nome_social = ?,  email = ?, senha = ?, idade = ?,"
-						+ "massa = ? , altura = ?  WHERE id_clientes = ?");
-				ps.setString(1, u.getNome());
-				ps.setString(2, u.getEmail());
-				ps.setString(3, u.getNome_social());
-				ps.setInt(4, u.getId_clientes());
-				ps.setInt(5, u.getIdade());
-				ps.setFloat(6, u.getMassa());
+				ps = con.prepareStatement("UPDATE clientes SET nome = ? ,id_clientes = ?,"
+						+ "email = ? ,cpf = ? ,"
+						+ "nome_social = ? ,idade= ? ,altura = ?,"
+						+ "  massa = ?,  genero = ?, telefone = ?,"
+						+ "celular = ? , endereco = ?  WHERE id_clientes = ?");
+				ps.setInt(1, u.getId_clientes());
+				ps.setString(2, u.getNome());
+				ps.setString(3, u.getEmail());
+				ps.setInt(4, u.getCpf());
+				ps.setString(5, u.getNome_social());
+				
+				ps.setInt(6, u.getIdade());
 				ps.setFloat(7, u.getAltura());
-				ps.setString(8, u.getEndereco());
-				ps.setString(9, u.getCpf());
-				ps.setString(10, u.getSenha());
-				ps.setString(11, u.getTelefone());
-				ps.setString(12, u.getCelular());
-				ps.setString(13, u.getGenero());				
+				ps.setInt(8, u.getMassa());
+				
+				
+				
+				ps.setString(9, u.getGenero());
+				ps.setInt(10, u.getTelefone());
+				ps.setInt(11, u.getCelular());
+				
+				ps.setString(12, u.getEndereco());				
 				ps.execute();	
 				
 			} catch (SQLException e) {
