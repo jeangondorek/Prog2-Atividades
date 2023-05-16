@@ -6,14 +6,6 @@ Projeto em Java, utiliza JSF com xhtml.
 ##### To create tables on database
 
 ```
-# Atividades prog2
-
-## Execução de exercicios para matéria de prog2
-Projeto em Java, utiliza JSF com xhtml.
-
-##### To create tables on database
-
-```
 
 -- Início SQL
 CREATE USER aplicacao_user PASSWORD 'aplicacao_user';
@@ -85,5 +77,4 @@ CREATE TABLE IF NOT EXISTS public.t_client
 );
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA "public" to aplicacao_user;
 GRANT SELECT, USAGE, UPDATE ON ALL SEQUENCES IN SCHEMA "public" to aplicacao_user;
-```
 ```
