@@ -31,13 +31,16 @@ public class ClientController implements Serializable {
 	private Client client;
 
 	private List<Client> clientList;
+	private String filterName;
+
 
 	private Boolean renderNewRegister;
 
 	@PostConstruct
 	public void init() {
 		this.setClientList(clientDAO.listAll());
-	}
+	    this.filterName = "";
+	}	
 
 	public void newRegister() {
 		this.setClient(new Client());
@@ -87,6 +90,10 @@ public class ClientController implements Serializable {
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Falha ao cadastrar cliente!", null));
 		PrimeFaces.current().ajax().update("form:messages");
 		this.setClientList(clientDAO.listAll());
+	}
+	
+	public void filterByName() {
+	    this.clientList = clientDAO.filterByName(filterName);
 	}
 
 	public void saveUpdate() {

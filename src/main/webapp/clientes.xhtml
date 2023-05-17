@@ -102,8 +102,8 @@
 	            </p:toolbarGroup>
 	        </p:toolbar>
 	
-	        <p:dataTable id="dt-camisetas" widgetVar="dtCamisetas" var="client" value="#{clientController.clientList}">
-	            <f:facet name="header">
+	        <p:dataTable id="dt-camisetas" widgetVar="dtCamisetas" var="client" value="#{clientController.clientList}" filteredValue="#{clientController.clientList}">
+	          <f:facet name="header">
 	                <div>
 	                    <span style="font-weight: bold">Clientes</span>
 	                </div>
@@ -141,7 +141,23 @@
 				<p:column headerText="Endereço">
 	                <h:outputText value="#{client.address}" />
 				</p:column>
-
+				<p:column headerText="Nome" filterBy="#{client.name}">
+	                <h:outputText value="#{client.name}" />
+	            </p:column>
+				<p:inputText id="filterName" value="#{clientController.filterName}">
+				    <p:ajax event="keyup" update="dt-camisetas" />
+				</p:inputText>
+				
+				<h:form>
+				    <p:outputLabel for="genderFilter" value="Filtro de Gênero: " />
+				    <p:selectOneMenu id="genderFilter" value="#{clientBean.selectedGender}">
+				        <f:selectItem itemLabel="Selecione" itemValue="" />
+				        <f:selectItems value="#{clientBean.genderOptions}" />
+				    </p:selectOneMenu>
+				    <p:commandButton value="Filtrar" action="#{clientBean.filterByGender}" />
+				</h:form>
+				
+				
 	            <p:column>
 	                <p:commandButton icon="pi pi-pencil" update=":dialogs" 
 	                    oncomplete="PF('camisetaDialog').show()" action="#{clientController.updateRegister()}"
