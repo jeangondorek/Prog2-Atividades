@@ -86,4 +86,6 @@ docker pull postgres
 ```
 docker run --name db_prog2 -e POSTGRES_PASSWORD=postgres -p 5432:5432 -d postgres
 ```
-
+```
+sudo /etc/init.d/postgresql stop
+```
