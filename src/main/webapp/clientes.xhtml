@@ -114,7 +114,7 @@
 	            <p:column headerText="CPF">
 	                <h:outputText value="#{client.cpf}" />
 	            </p:column>
-	            <p:column headerText="Nome">
+	            <p:column headerText="Nome" filterBy="#{client.name}">
 	                <h:outputText value="#{client.name}" />
 	            </p:column>
 				<p:column headerText="Nome social">
@@ -141,9 +141,6 @@
 				<p:column headerText="Endereço">
 	                <h:outputText value="#{client.address}" />
 				</p:column>
-				<p:column headerText="Nome" filterBy="#{client.name}">
-	                <h:outputText value="#{client.name}" />
-	            </p:column>
 				<p:inputText id="filterName" value="#{clientController.filterName}">
 				    <p:ajax event="keyup" update="dt-camisetas" />
 				</p:inputText>

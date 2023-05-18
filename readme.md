@@ -78,3 +78,12 @@ CREATE TABLE IF NOT EXISTS public.t_client
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA "public" to aplicacao_user;
 GRANT SELECT, USAGE, UPDATE ON ALL SEQUENCES IN SCHEMA "public" to aplicacao_user;
 ```
+
+```
+docker pull postgres
+```
+
+```
+docker run --name db_prog2 -e POSTGRES_PASSWORD=postgres -p 5432:5432 -d postgres
+```
+
