@@ -197,43 +197,4 @@ public class ClientDAO implements Serializable {
 		}
 		return lastId;
 	}
-
-    public List<Client> filterByName(String filterName) {
-        List<Client> filteredClients = new ArrayList<>();
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
-        try {
-            connection = this.dataSource.getConnection();
-            preparedStatement = connection.prepareStatement("SELECT * FROM t_client WHERE LOWER(cli_name) LIKE ?");
-            preparedStatement.setString(1, "%" + filterName.toLowerCase() + "%");
-            resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                Client client = new Client();
-                client.setIdClient(resultSet.getInt("cli_id"));
-                client.setCpf(resultSet.getString("cli_cpf"));
-                client.setName(resultSet.getString("cli_name"));
-                client.setSocialName(resultSet.getString("cli_social_name"));
-                client.setHeight(resultSet.getDouble("cli_height"));
-                client.setWeight(resultSet.getDouble("cli_weight"));
-                client.setGender(resultSet.getString("cli_gender"));
-                client.setAge(resultSet.getInt("cli_age"));
-                client.setEmail(resultSet.getString("cli_email"));
-                client.setCellphone(resultSet.getString("cli_cellphone"));
-                client.setAddress(resultSet.getString("cli_address"));
-                filteredClients.add(client);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            DbUtil.closeResultSet(resultSet);
-            DbUtil.closePreparedStatement(preparedStatement);
-            DbUtil.closeConnection(connection);
-        }
-
-        return filteredClients;
-    }
-
 }

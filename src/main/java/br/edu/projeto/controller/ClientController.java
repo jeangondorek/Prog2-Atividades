@@ -1,6 +1,7 @@
 package br.edu.projeto.controller;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,16 +32,19 @@ public class ClientController implements Serializable {
 	private Client client;
 
 	private List<Client> clientList;
-	private String filterName;
-
 
 	private Boolean renderNewRegister;
+
+	private String fname;
+
+	private String fgene;
+
+	private List<Client> clientesfiltrados;
 
 	@PostConstruct
 	public void init() {
 		this.setClientList(clientDAO.listAll());
-	    this.filterName = "";
-	}	
+	}
 
 	public void newRegister() {
 		this.setClient(new Client());
@@ -91,10 +95,6 @@ public class ClientController implements Serializable {
 		PrimeFaces.current().ajax().update("form:messages");
 		this.setClientList(clientDAO.listAll());
 	}
-	
-	public void filterByName() {
-	    this.clientList = clientDAO.filterByName(filterName);
-	}
 
 	public void saveUpdate() {
 		if (!validateClientData()) {
@@ -116,6 +116,31 @@ public class ClientController implements Serializable {
 		this.client.setIdClient((int) this.clientDAO.getLastId());
 	}
 
+	public List<Client> getFilteredClients() {
+		if (fname == null || fname.isEmpty()) {
+			clientesfiltrados = clientList;
+		} else {
+			clientesfiltrados = new ArrayList<>();
+			for (Client client : clientList) {
+				if (client.getName().toLowerCase().contains(fname.toLowerCase())) {
+					clientesfiltrados.add(client);
+				}
+			}
+		}
+		
+		if (fgene != null && !fgene.isEmpty()) {
+			List<Client> filteredByGender = new ArrayList<>();
+			for (Client client : clientesfiltrados) {
+				if (client.getGender().equalsIgnoreCase(fgene)) {
+					filteredByGender.add(client);
+				}
+			}
+			clientesfiltrados = filteredByGender;
+		}
+		
+		return clientesfiltrados;
+	}
+	
 	// Validações
 	private boolean validateClientData() {
 		if (!validateHeight(Double.toString(this.client.getHeight()))) {
@@ -133,7 +158,7 @@ public class ClientController implements Serializable {
 		
 		if (!validateCellphoneFormat(this.client.getCellphone())) {
 			this.facesContext.addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_ERROR, "O telefone deve estar no formato (xx) xxxxx-xxxx!", null));
+				new FacesMessage(FacesMessage.SEVERITY_ERROR, "O telefone deve estar no formato (xx)xxxxx-xxxx!", null));
 			return false;
 		}
 		return true;
@@ -209,5 +234,21 @@ public class ClientController implements Serializable {
 
 	public void setRenderNewRegister(Boolean renderNewRegister) {
 		this.renderNewRegister = renderNewRegister;
+	}
+
+	public String getFilterName() {
+		return fname;
+	}
+
+	public void setFilterName(String fname) {
+		this.fname = fname;
+	}
+
+	public String getFilterGender() {
+		return fgene;
+	}
+
+	public void setFilterGender(String fgene) {
+		this.fgene = fgene;
 	}
 }
